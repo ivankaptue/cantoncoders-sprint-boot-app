@@ -10,5 +10,5 @@ public class Application extends SpringBootServletInitializer  {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	//pending code here
+	//pending code here;
 }
