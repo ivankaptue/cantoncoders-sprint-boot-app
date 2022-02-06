@@ -3,8 +3,7 @@ pipeline {
     stages {
         /*stage('Checkout') {
             steps {
-                git credentialsId: 'github',
-                        url: 'https://github.com/ivankaptue/cantoncoders-sprint-boot-app'
+                git credentialsId: 'github', url: 'https://github.com/ivankaptue/cantoncoders-sprint-boot-app'
             }
         }*/
         stage('Tests') {
