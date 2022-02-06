@@ -1,31 +1,30 @@
 pipeline {
-    // where or who
-    agent { label 'master' }
-    
-    // collection of stages
-    stages{
-        stage('Quality Dpt'){
-            steps{
-                sh 'mvn test -B'
+    agent { label 'built-in'}
+    stages {
+        /*stage('Checkout') {
+            steps {
+                git credentialsId: 'github-ivan',
+                        url: 'https://github.com/ivankaptue/cantoncoders-sprint-boot-app'
+            }
+        }*/
+        stage('Tests') {
+            steps {
+                sh 'ls -ltr'
+                sh './mvnw clean test -B'
             }
         }
-        stage('Package '){
-            steps{
-                sh 'mvn clean package -B -Dmaven.test.skip=true'
-            }
-        }
-        stage('Deploy war'){
-            steps{
-                sh 'cp target/cantoncoders-0.0.1.war /var/lib/tomcat8/webapps/cantoncoders-0.0.1.war'
+        stage('Package') {
+            steps {
+                sh './mvnw clean package -B -Dmaven.test.skip=true'
             }
         }
     }
-    post{
-        failure{
-            echo 'You failed'
+    post {
+        failure {
+            echo 'Failed'
         }
-        success{
-            echo 'You are Yoda'
+        success {
+            echo 'Success'
         }
     }
 }
