@@ -26,5 +26,8 @@ pipeline {
         success {
             echo 'Success'
         }
+        always {
+            deleteDir()
+        }
     }
 }
