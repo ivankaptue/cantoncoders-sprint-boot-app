@@ -1,5 +1,10 @@
 pipeline {
-    agent { label 'built-in'}
+    agent { label 'built-in' }
+
+    environment {
+        PROFILE = 'dev'
+    }
+
     stages {
         /*stage('Checkout') {
             steps {
@@ -7,6 +12,11 @@ pipeline {
                 url: 'https://github.com/ivankaptue/cantoncoders-sprint-boot-app'
             }
         }*/
+        stage('Env variable') {
+            steps {
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} and java : ${env.JAVA_HOME}, and profile ${env.PROFILE}"
+            }
+        }
         stage('Tests') {
             steps {
                 sh 'ls -ltr'
@@ -14,6 +24,11 @@ pipeline {
             }
         }
         stage('Package') {
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
             steps {
                 sh './mvnw clean package -B -Dmaven.test.skip=true'
             }
